@@ -1,14 +1,33 @@
-import React from 'react';
-import { StyleSheet, Text, View, StatusBar, TextInput, Dimensions, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, StatusBar, TextInput, Dimensions, Platform, ScrollView } from 'react-native';
+import ToDo from './ToDo';
 
-const { height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 const App = () => {
+  const [newTodo, setNewTodo] = useState('');
+
+  const onChangeNewTodo = (e) => {
+    // setNewTodo(e.target.value);
+    setNewTodo(e);
+    console.log(newTodo);
+  }
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content"/>
+      <StatusBar barStyle="light-content" />
       <Text style={styles.title}>Kawai To Do</Text>
       <View style={styles.card}>
-        <TextInput style={styles.input} placeholder={"New To Do"}/>
+        <TextInput 
+        onChangeText={onChangeNewTodo} 
+        value={newTodo} 
+        style={styles.input} 
+        placeholder={"New To Do"} 
+        placeholderTextColor={'#999'}
+        returnKeyType={'done'}
+        autoCorrect={false}
+        />
+        <ScrollView>
+          <ToDo/>
+        </ScrollView>
       </View>
     </View>
   );
@@ -20,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F23657',
     alignItems: 'center',
   },
-  title:  {
+  title: {
     color: 'white',
     fontSize: 20,
     marginTop: 40,
@@ -47,6 +66,12 @@ const styles = StyleSheet.create({
         elevation: 3
       }
     })
+  },
+  input: {
+    padding: 20,
+    borderBottomColor: "#bbb",
+    borderBottomWidth: 1,
+    fontSize: 25,
   }
 });
 
